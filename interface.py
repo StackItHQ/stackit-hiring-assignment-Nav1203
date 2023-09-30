@@ -57,10 +57,17 @@ def upload_data_to_sheets(dataframe,row,num,unfil,url,sname):
                                     range=f'{sname}',valueInputOption='USER_ENTERED',body={'values':cols}).execute()
 
     st.success(f'Success!:  {str(request)}')
-st.header('CSV to Google Sheets Importer')
+st.header('CSV to Google Sheets Importer :memo:')
 st.write('Hey :wave:')
 st.write('Instructions are simple, You create a new Google sheet add the following email as a user in the shared members after clicking on the share button.')
+st.write('')
+st.write('Email to Add:')
 st.code('sheetapi@sheetsapidemo-400606.iam.gserviceaccount.com')
+width=50
+side=((100-width)/2)
+_,container,_=st.columns([side,width,side])
+with container:
+    st.video('instruction.mp4')
 file=st.file_uploader('Upload CSV files',accept_multiple_files=False,type='csv')
 if file is not None:
     # delim=get_delimiter(file)
@@ -69,25 +76,33 @@ if file is not None:
     st.write(dataframe)
     vals={}
     url=st.text_input('Paste the URL of the Google sheet you want the data in: ')
-    sname=st.text_input('Sheet Name in the file of where the data has to be pasted')
-    filter_method=st.selectbox('How to filter dataset?',options=['By Row Names','By Indexing','No filter'])
+    sname=st.text_input('Sheet Name in the file of where the data has to be pasted (has to be created manually):')
+    '''
+     You can use the below methods to modify
+     your dataset
+    '''
+    
+    '''
+    Filtering can be done column-wise as well as row-wise
+    '''
+    filter_method=st.selectbox('How to filter dataset?',options=['By Column Names','By Indexing','No filter'],index=2)
     # filter_names=st.checkbox('Filter By Column Names')
     # filter_number=st.checkbox('Filter By Indexes')
     row,num,unfil=False,False,False
   
-    if filter_method=='By Row Names':
+    if filter_method=='By Column Names':
         row=True
         for i in dataframe.columns:
             temp=st.checkbox(str(i))
             vals[i]=temp
-        agreed=st.button('Click to choose')
-        if agreed:
-            for i in vals:
-                if vals[i]:
-                    st.write(i)
+        # agreed=st.button('Click to choose')
+        # if agreed:
+        #     for i in vals:
+        #         if vals[i]:
+        #             st.write(i)
     elif filter_method=='By Indexing':
         num=True
-        start,end=st.select_slider('Include Range of Rows',options=[i+1 for i in range(0,dataframe.shape[1])],value=(1,dataframe.shape[1]))
+        start,end=st.select_slider('Include Range of Columns',options=[i+1 for i in range(0,dataframe.shape[1])],value=(1,dataframe.shape[1]))
     elif filter_method=='No filter':
         unfil=True
     tap=st.button('Upload to sheet')
