@@ -59,3 +59,9 @@ Feel free to check the discussions tab, you might get something of help there. C
 
 ## Developer's Section
 *Add your video here, and your approach to the problem (optional). Leave some comments for us here if you want, we will be reading this :)*
+
+- [x] My code's working just fine! 🥳
+- [ ] I have recorded a video showing it working and embedded it in the README ▶️
+- [x] I have tested all the normal working cases 😎
+- [x] I have even solved some edge cases (brownie points) 💪
+- [ ] I added my very planned-out approach to the problem at the end of this README 📜
