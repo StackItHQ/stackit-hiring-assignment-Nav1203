@@ -26,8 +26,12 @@ sheet = service.spreadsheets()
 #     delimiter = sniffer.sniff(data).delimiter
 #     return delimiter
 def upload_data_to_sheets(dataframe,row,num,unfil,url,sname):
-    file_id='1vgIhl4taJWmI97rgZU_A-KDNNZzZXtEeL5rNHaoVJvI'
-
+    pts=url.split('/')
+    for i in range(0,len(pts)):
+        if pts[i]=='d':
+            file_id=pts[i+1]
+            break
+    # file_id=pts[i]
     if num:
         new_df=dataframe.iloc[:,start-1:end-1]
         cols=[list(new_df.columns)]
@@ -51,7 +55,7 @@ def upload_data_to_sheets(dataframe,row,num,unfil,url,sname):
         # print(len(cols),cols[0])
         request=sheet.values().update(spreadsheetId=file_id,
                                     range=f'{sname}',valueInputOption='USER_ENTERED',body={'values':cols}).execute()
-        
+
     st.success(f'Success!:  {str(request)}')
 st.header('CSV to Google Sheets Importer')
 st.write('Hey :wave:')
