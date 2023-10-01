@@ -87,27 +87,27 @@ Optimised code and well commented is present in the file interface.py
 
 To work with the module, clone the repository in a folder using,
 
-'''bash
+```bash
   git clone https://github.com/StackItHQ/stackit-hiring-assignment-Nav1203.git
-'''
+```
 
 Create a python virtual environment in the folder using,
 
-'''bash
+```bash
   python -m venv venv
-'''
+```
 
 Activate the virtual environment and then run,
 
-'''bash
+```bash
   pip install -r requirements.txt
-'''
+```
 
 In the terminal of the root folder, type,
 
-'''bash
+```bash
   streamlit run interface.py
-'''
+```
 
 The app should be up and running in at localhost:8501
 
