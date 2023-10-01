@@ -82,6 +82,10 @@ Approach Taken
   - If the user is to column wise filter, he can choose the necessary columns using checkboxes or he can choose the range of indexes for the columns to keep
   - If the user is to row-wise filter, he can apply conditional filters such as less than - greater than, or omit certain values out
 - On clicking upload, the uploaded data is written into sheet mentioned using the google sheets api for google cloud.  
+
+
+
+
 - [x] My code's working just fine! 🥳
 - [x] I have recorded a video showing it working and embedded it in the README ▶️
 - [x] I have tested all the normal working cases 😎
