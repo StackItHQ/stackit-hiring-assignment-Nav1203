@@ -36,14 +36,6 @@ if 'filter_mode' not in st.session_state:
 if 'filter_median' not in st.session_state:
     st.session_state.filter_median=False
 
-# def get_delimiter(file, bytes = 4096):
-#     sniffer = csv.Sniffer()
-#     data = str(file.read())
-#     delimiter = sniffer.sniff(data).delimiter
-#     return delimiter
-# def reload_file():
-#     if (file.name!=)
-#         st.session_state.df=None
 def upload_data_to_sheets(df,row,num,unfil,url,sname):
     pts=url.split('/')
     for i in range(0,len(pts)):
@@ -76,7 +68,9 @@ def upload_data_to_sheets(df,row,num,unfil,url,sname):
                                     range=f'{sname}',valueInputOption='USER_ENTERED',body={'values':cols}).execute()
 
     st.success(f'Success!:  {str(request)}')
-st.header('CSV to Google Sheets Importer :memo:')
+st.set_page_config(page_title='CSV to Gsheet',page_icon=':memo:')
+st.title('CSV to GSheet :memo:')
+st.header('Instructions')
 st.write('Hey :wave:')
 st.write('Instructions are simple, You create a new Google sheet add the following email as a user in the shared members after clicking on the share button.')
 st.write('')
@@ -87,6 +81,7 @@ side=((100-width)/2)
 _,container,_=st.columns([side,width,side])
 with container:
     st.video('instruction.mp4')
+st.header('Converter')
 file=st.file_uploader('Upload CSV files',accept_multiple_files=False,type='csv')
 print(file)
 if file is not None:
@@ -95,14 +90,10 @@ if file is not None:
         st.session_state.id=file.file_id
         st.session_state.filtered_rem=False
         st.session_state.filtered_fill=False
-    # delim=get_delimiter(file)
-    # print(st.session_state.df)
     if str(type(st.session_state.df))=="<class 'NoneType'>":
         print('working')
         st.session_state.df=pd.read_csv(file,on_bad_lines='skip',sep=None)
         st.session_state.null_vals=st.session_state.df.isnull().sum().sum()+ st.session_state.df.isnull().sum().sum()
-        # print(type(st.session_state.null_vals),'*'*10)
-    # print(type(st.session_state.df))
     if st.session_state.null_vals!=0 and (st.session_state.filtered_rem!=True and st.session_state.filtered_fill!=True):
         st.warning(f'Detected {st.session_state.null_vals} number of null values! All null value containing rows will be removed!')
         st.write(st.session_state.df)
@@ -183,11 +174,6 @@ if file is not None:
             for i in st.session_state.df.columns:
                 temp=st.checkbox(str(i))
                 vals[i]=temp
-            # agreed=st.button('Click to choose')
-            # if agreed:
-            #     for i in vals:
-            #         if vals[i]:
-            #             st.write(i)
         elif filter_method=='By Indexing':
             num=True
             start,end=st.select_slider('Include Range of Columns',options=[i+1 for i in range(0,st.session_state.df.shape[1])],value=(1,st.session_state.df.shape[1]))
