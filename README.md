@@ -58,7 +58,6 @@ We have a checklist at the bottom of this README file, which you should update a
 Feel free to check the discussions tab, you might get something of help there. Check out that tab before reaching out to us. Also, did you know, the internet is a great place to explore 😛
 
 ## Developer's Section
-*Add your video here, and your approach to the problem (optional). Leave some comments for us here if you want, we will be reading this :)*
 
 https://github.com/StackItHQ/stackit-hiring-assignment-Nav1203/assets/99076767/61890ab4-27e6-404c-8904-67f7d336901c
 
@@ -84,6 +83,33 @@ Approach Taken
 - On clicking upload, the uploaded data is written into sheet mentioned using the google sheets api for google cloud.  
 
 
+Optimised code and well commented is present in the file interface.py
+
+To work with the module, clone the repository in a folder using,
+
+'''bash
+  git clone https://github.com/StackItHQ/stackit-hiring-assignment-Nav1203.git
+'''
+
+Create a python virtual environment in the folder using,
+
+'''bash
+  python -m venv venv
+'''
+
+Activate the virtual environment and then run,
+
+'''bash
+  pip install -r requirements.txt
+'''
+
+In the terminal of the root folder, type,
+
+'''bash
+  streamlit run interface.py
+'''
+
+The app should be up and running in at localhost:8501
 
 
 - [x] My code's working just fine! 🥳
