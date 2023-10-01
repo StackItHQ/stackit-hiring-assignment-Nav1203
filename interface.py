@@ -10,6 +10,9 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from google.oauth2 import service_account
 import numpy as np
+
+# Google sheets API setup
+
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 SERVICE_ACCOUNT_FILE = 'credentials.json'
 
@@ -19,6 +22,9 @@ credentials = service_account.Credentials.from_service_account_file(
 
 service = build('sheets', 'v4', credentials=credentials)
 sheet = service.spreadsheets()
+
+# Setting session variables to hold data that shouldn't be reset for each iteration
+
 if 'df' not in st.session_state:
     st.session_state.df=None
 if 'id' not in st.session_state:
@@ -36,13 +42,21 @@ if 'filter_mode' not in st.session_state:
 if 'filter_median' not in st.session_state:
     st.session_state.filter_median=False
 
+
+# function to upload dataframe to google sheets
+
 def upload_data_to_sheets(df,row,num,unfil,url,sname):
     pts=url.split('/')
+
+    # Splitting Google sheet link to get spreadsheet id
+
     for i in range(0,len(pts)):
         if pts[i]=='d':
             file_id=pts[i+1]
             break
-    # file_id=pts[i]
+
+    # Filteration of column wise data based on index 
+    
     if num:
         new_df=df.iloc[:,start-1:end-1]
         cols=[list(new_df.columns)]
@@ -50,6 +64,7 @@ def upload_data_to_sheets(df,row,num,unfil,url,sname):
         request=sheet.values().update(spreadsheetId=file_id,
                                 range=f'{sname}',valueInputOption='USER_ENTERED',body={'values':cols}).execute()
         
+    # filteration of column wise data based on name
     elif row:
         dropped=[]
         for i in vals:
@@ -60,6 +75,9 @@ def upload_data_to_sheets(df,row,num,unfil,url,sname):
         cols.extend(new_df.values.tolist())
         request=sheet.values().update(spreadsheetId=file_id,
                                 range=f'{sname}',valueInputOption='USER_ENTERED',body={'values':cols}).execute()
+    
+    # No filter appending entire dataset to Sheet
+    
     elif unfil:
         cols=[list(df.columns)]
         cols.extend(df.values.tolist())
@@ -68,6 +86,9 @@ def upload_data_to_sheets(df,row,num,unfil,url,sname):
                                     range=f'{sname}',valueInputOption='USER_ENTERED',body={'values':cols}).execute()
 
     st.success(f'Success!:  {str(request)}')
+
+# Page configration and instructions to use website
+
 st.set_page_config(page_title='CSV to Gsheet',page_icon=':memo:')
 st.title('CSV to GSheet :memo:')
 st.header('Instructions')
@@ -82,18 +103,30 @@ _,container,_=st.columns([side,width,side])
 with container:
     st.video('instruction.mp4')
 st.header('Converter')
+
+# File uploader object to get file information and data
+
 file=st.file_uploader('Upload CSV files',accept_multiple_files=False,type='csv')
 print(file)
 if file is not None:
+
+    # Setting session variable to default value or new value if file changed
+
     if file.file_id != st.session_state.id:
         st.session_state.df=None
         st.session_state.id=file.file_id
         st.session_state.filtered_rem=False
         st.session_state.filtered_fill=False
+
+    # If session variable of dataset empty then read dataset from file
+
     if str(type(st.session_state.df))=="<class 'NoneType'>":
         print('working')
         st.session_state.df=pd.read_csv(file,on_bad_lines='skip',sep=None)
         st.session_state.null_vals=st.session_state.df.isnull().sum().sum()+ st.session_state.df.isnull().sum().sum()
+
+    # Null Value Filtration based on amount of null values present in dataset and different methods to do so too
+
     if st.session_state.null_vals!=0 and (st.session_state.filtered_rem!=True and st.session_state.filtered_fill!=True):
         st.warning(f'Detected {st.session_state.null_vals} number of null values! All null value containing rows will be removed!')
         st.write(st.session_state.df)
@@ -113,7 +146,6 @@ if file is not None:
             print('dropping worked')
             st.session_state.null_vals=0
             st.session_state.df.dropna(inplace=True)
-            # st.session_state.null_vals=0
             st.rerun()
         if st.session_state.filtered_fill:
             print('filling worked')
@@ -150,10 +182,16 @@ if file is not None:
             st.session_state.null_vals=0
             st.rerun()
         print(st.session_state.filter_mode,st.session_state.filter_median,st.session_state.null_vals)
-    if st.session_state.null_vals==0:    
+    if st.session_state.null_vals==0:
+
+        # if null values cleared move on to next step
+
         st.write("Preview Dataset")
         st.write(st.session_state.df)
         vals={}
+
+        # obtain gsheet link to append dataset to
+
         url=st.text_input('Paste the URL of the Google sheet you want the data in: ')
         sname=st.text_input('Sheet Name in the file of where the data has to be pasted (has to be created manually):')
         '''
@@ -164,11 +202,11 @@ if file is not None:
         '''
         Filtering can be done column-wise as well as row-wise
         '''
+
+        # Column-wise Filtration for dataset and options mentioned here
+
         filter_method=st.selectbox('Columw-wise filtration',options=['By Column Names','By Indexing','No filter'],index=2)
-        # filter_names=st.checkbox('Filter By Column Names')
-        # filter_number=st.checkbox('Filter By Indexes')
         row,num,unfil=False,False,False
-    
         if filter_method=='By Column Names':
             row=True
             for i in st.session_state.df.columns:
@@ -183,7 +221,9 @@ if file is not None:
         Value based formatting
         '''
         row_wise=st.selectbox('Filters based on row values',options=['No filter','Conditional Range filter','Filter Values Out'])
-        
+
+        # Row-wise filtration to apply filters on dataset
+
         if row_wise=='Conditional Range filter':
             st.warning('Click Apply filter to apply row wise filtering!')
             col=st.selectbox('Column to filter:',options=st.session_state.df.columns)
@@ -200,7 +240,6 @@ if file is not None:
                         st.session_state.df=st.session_state.df[(st.session_state.df[col]>=int(s1)) & (st.session_state.df[col]<=int(s2))]
                     st.success('Filter Applied!')
                     st.write(st.session_state.df)
-
         elif row_wise=='Filter Values Out':
             st.warning('Click Apply filter to apply row wise filtering!')
             col=st.selectbox('Column to filter:',options=st.session_state.df.columns)
@@ -216,6 +255,7 @@ if file is not None:
                     st.success('Filter Applied!')
                     st.write(st.session_state.df)
 
+        # invoking of function to upload to sheet, data required is provided
 
         tap=st.button('Upload to sheet')
         if tap:
