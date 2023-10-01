@@ -48,11 +48,11 @@ Once you're done, make sure you **record a video** showing your project working.
 
 We have a checklist at the bottom of this README file, which you should update as your progress with your assignment. It will help us evaluate your project.
 
-- [ ] My code's working just fine! 🥳
-- [ ] I have recorded a video showing it working and embedded it in the README ▶️
-- [ ] I have tested all the normal working cases 😎
-- [ ] I have even solved some edge cases (brownie points) 💪
-- [ ] I added my very planned-out approach to the problem at the end of this README 📜
+- [x] My code's working just fine! 🥳
+- [x] I have recorded a video showing it working and embedded it in the README ▶️
+- [x] I have tested all the normal working cases 😎
+- [x] I have even solved some edge cases (brownie points) 💪
+- [x] I added my very planned-out approach to the problem at the end of this README 📜
 
 ## Got Questions❓
 Feel free to check the discussions tab, you might get something of help there. Check out that tab before reaching out to us. Also, did you know, the internet is a great place to explore 😛
@@ -60,8 +60,42 @@ Feel free to check the discussions tab, you might get something of help there. C
 ## Developer's Section
 *Add your video here, and your approach to the problem (optional). Leave some comments for us here if you want, we will be reading this :)*
 
+https://github.com/StackItHQ/stackit-hiring-assignment-Nav1203/assets/99076767/61890ab4-27e6-404c-8904-67f7d336901c
+
+[Youtube Link for High Quality](https://youtu.be/9BnMo900D4U)
+
+Approach Taken
+- The User Interface has been built using Streamlit.
+- We import the dataset using streamlit components that can take in files using a file uploader object.
+- We read the data as a dataframe using the pandas library
+- Preview the dataset
+- Check for null values and if present, notify the user about the number of null values and give the user 5 options to choose from
+  - Fill values using forward fill or backward fill
+  - Remove rows containing null values
+  - Fill using mean of column
+  - Fill using mode of column
+  - Fill using median of column
+- After the null values are removed, the user is asked to provide the google sheet link of where the data is to be pasted
+- The user is also to provide the sheet name along with it.
+- In the instructions column a service account mail is mentioned which the user is to copy and paste onto the users column and grant editor permission to it as well.
+- After that if necessary the user can filter the dataset by column-wise or row-wise filtering
+  - If the user is to column wise filter, he can choose the necessary columns using checkboxes or he can choose the range of indexes for the columns to keep
+  - If the user is to row-wise filter, he can apply conditional filters such as less than - greater than, or omit certain values out
+- On clicking upload, the uploaded data is written into sheet mentioned using the google sheets api for google cloud.  
 - [x] My code's working just fine! 🥳
-- [ ] I have recorded a video showing it working and embedded it in the README ▶️
+- [x] I have recorded a video showing it working and embedded it in the README ▶️
 - [x] I have tested all the normal working cases 😎
 - [x] I have even solved some edge cases (brownie points) 💪
-- [ ] I added my very planned-out approach to the problem at the end of this README 📜
+- [x] I added my very planned-out approach to the problem at the end of this README 📜
+
+## Images of the App
+
+![image](https://github.com/StackItHQ/stackit-hiring-assignment-Nav1203/assets/99076767/15340e42-9b5b-4d3e-ade9-171b04156199)
+
+![image](https://github.com/StackItHQ/stackit-hiring-assignment-Nav1203/assets/99076767/416956eb-45dc-4cb3-85f0-66b6b60920d1)
+
+![image](https://github.com/StackItHQ/stackit-hiring-assignment-Nav1203/assets/99076767/8679be7b-3fe2-42f8-9d92-59903fbffb46)
+
+![image](https://github.com/StackItHQ/stackit-hiring-assignment-Nav1203/assets/99076767/91265b9b-7aa0-4815-af23-6ddf5728b395)
+
+
