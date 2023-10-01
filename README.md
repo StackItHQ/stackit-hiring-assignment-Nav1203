@@ -82,9 +82,20 @@ Approach Taken
   - If the user is to column wise filter, he can choose the necessary columns using checkboxes or he can choose the range of indexes for the columns to keep
   - If the user is to row-wise filter, he can apply conditional filters such as less than - greater than, or omit certain values out
 - On clicking upload, the uploaded data is written into sheet mentioned using the google sheets api for google cloud.  
-
 - [x] My code's working just fine! 🥳
 - [x] I have recorded a video showing it working and embedded it in the README ▶️
 - [x] I have tested all the normal working cases 😎
 - [x] I have even solved some edge cases (brownie points) 💪
 - [x] I added my very planned-out approach to the problem at the end of this README 📜
+
+## Images of the App
+
+![image](https://github.com/StackItHQ/stackit-hiring-assignment-Nav1203/assets/99076767/15340e42-9b5b-4d3e-ade9-171b04156199)
+
+![image](https://github.com/StackItHQ/stackit-hiring-assignment-Nav1203/assets/99076767/416956eb-45dc-4cb3-85f0-66b6b60920d1)
+
+![image](https://github.com/StackItHQ/stackit-hiring-assignment-Nav1203/assets/99076767/8679be7b-3fe2-42f8-9d92-59903fbffb46)
+
+![image](https://github.com/StackItHQ/stackit-hiring-assignment-Nav1203/assets/99076767/91265b9b-7aa0-4815-af23-6ddf5728b395)
+
+
