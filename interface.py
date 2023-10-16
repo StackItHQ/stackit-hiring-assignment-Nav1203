@@ -96,7 +96,7 @@ st.write('Hey :wave:')
 st.write('Instructions are simple, You create a new Google sheet add the following email as a user in the shared members after clicking on the share button.')
 st.write('')
 st.write('Email to Add:')
-st.code('sheetapi@sheetsapidemo-400606.iam.gserviceaccount.com')
+# st.code('sheetapi@sheetsapidemo-400606.iam.gserviceaccount.com')
 width=50
 side=((100-width)/2)
 _,container,_=st.columns([side,width,side])
